@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 document.addEventListener("DOMContentLoaded", () => {
     addEventListenersFunction();
+    fetchJokeFromApi();
 });
 import { fetchJokeFromApi } from "../api/api-calls.js";
 //! WE ARE IN HOME-PAGE BRANCH
@@ -19,17 +20,21 @@ import { fetchJokeFromApi } from "../api/api-calls.js";
 //     <button type="button" id="next-joke-btn">Next joke</button>
 // </div>
 const jokesDiv = document.getElementById("jokes-div");
+fetchJokeFromApi();
 function addEventListenersFunction() {
     return __awaiter(this, void 0, void 0, function* () {
         const jokesDiv = document.getElementById("jokes-div");
         const getNextJokeBtn = document.getElementById("next-joke-btn");
+        if (jokesDiv) {
+            jokesDiv.innerHTML = yield fetchJokeFromApi();
+        }
         if (getNextJokeBtn && jokesDiv) {
             getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
                 try {
                     const joke = yield fetchJokeFromApi();
-                    console.log(joke);
                     jokesDiv.innerHTML = joke;
+                    console.log(joke);
                 }
                 catch (error) {
                     console.error("error, next joke btn not found", error);

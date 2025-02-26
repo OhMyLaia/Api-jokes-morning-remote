@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
     addEventListenersFunction();
+    fetchJokeFromApi();
 });
 
 import { fetchJokeFromApi } from "../api/api-calls.js";
@@ -15,11 +16,16 @@ import { fetchJokeFromApi } from "../api/api-calls.js";
 
 const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 
+fetchJokeFromApi();
 
 async function addEventListenersFunction() {
     
     const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
     const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
+
+    if (jokesDiv) {
+        jokesDiv.innerHTML = await fetchJokeFromApi();
+    }
 
     if (getNextJokeBtn && jokesDiv) {
         getNextJokeBtn.addEventListener("click", async event => {
@@ -27,8 +33,8 @@ async function addEventListenersFunction() {
 
             try {
                 const joke = await fetchJokeFromApi();
-                console.log(joke);
                 jokesDiv.innerHTML = joke;
+                console.log(joke);
 
             } catch (error) {
                 console.error("error, next joke btn not found", error);

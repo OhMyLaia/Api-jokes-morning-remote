@@ -16,6 +16,8 @@ export function fetchJokeFromApi() {
         })
             .then(res => res.json())
             .then(data => {
+            let counter = 0;
+            counter++;
             console.log('API Response:', data);
             console.log(`joke -> ${data.joke}`);
             return data.joke;
@@ -27,3 +29,5 @@ export function fetchJokeFromApi() {
         });
     });
 }
+// export async function firstFetchedJokeFromApi() {
+// }
