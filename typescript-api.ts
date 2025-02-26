@@ -12,3 +12,4 @@ const multiplicator: Operation = (a, b, printText) => {
 
 multiplicator(2, 4, "multiplied numbers, result is...");
 multiplicator(3, 4, "multiplied numbers, result is...");
+
