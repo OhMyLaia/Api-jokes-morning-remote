@@ -9,15 +9,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+document.addEventListener("DOMContentLoaded", () => {
+    addEventListenersFunction();
+});
 const api_calls_1 = require("../api/api-calls");
-const sum = (a, b, printText) => {
-    console.log(printText, a + b);
-};
-const multiplicator = (a, b, printText) => {
-    console.log(printText, a * b);
-};
-multiplicator(2, 4, "multiplied numbers, result is...");
-multiplicator(3, 4, "multiplied numbers, result is...");
 //! WE ARE IN HOME-PAGE BRANCH
 // <span id="weather-span">weather</span>
 // <div>
@@ -33,15 +28,25 @@ else {
     console.error("error jokes-div not found");
 }
 function addEventListenersFunction() {
-    const getNextJokeBtn = document.getElementById("next-joke-btn");
-    if (getNextJokeBtn) {
-        getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
-            event.preventDefault();
-            getNextJokeBtn.innerHTML = yield (0, api_calls_1.fetchJokeFromApi)();
-        }));
-    }
-    else {
-        console.error("error next joke btn not found");
-    }
+    return __awaiter(this, void 0, void 0, function* () {
+        const getNextJokeBtn = document.getElementById("next-joke-btn");
+        const jokesDiv = document.getElementById("jokes-div");
+        if (getNextJokeBtn && jokesDiv) {
+            getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
+                event.preventDefault();
+                try {
+                    const joke = yield (0, api_calls_1.fetchJokeFromApi)();
+                    console.log(joke);
+                    jokesDiv.innerHTML = joke;
+                }
+                catch (error) {
+                    console.error("error, next joke btn not found", error);
+                }
+            }));
+        }
+        else {
+            console.error(`Next-joke-btn or jokes-div not found`);
+        }
+    });
 }
 addEventListenersFunction();
