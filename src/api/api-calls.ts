@@ -1,5 +1,5 @@
 
-export async function fetchJokeFromApi(): Promise<string> {
+export async function fetchJokeFromApi() {
 
     return fetch("https://icanhazdadjoke.com/", {
         headers: {

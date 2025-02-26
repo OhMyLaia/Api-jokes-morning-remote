@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addEventListenersFunction();
 });
 
-import { fetchJokeFromApi } from "../api/api-calls";
+import { fetchJokeFromApi } from "../api/api-calls.js";
 
 //! WE ARE IN HOME-PAGE BRANCH
 
@@ -15,15 +15,11 @@ import { fetchJokeFromApi } from "../api/api-calls";
 
 const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 
-    if (jokesDiv) {
-        jokesDiv.innerHTML = "";
-    } else {
-        console.error("error jokes-div not found");
-    }
 
-    async function addEventListenersFunction() {
-    const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
+async function addEventListenersFunction() {
+    
     const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
+    const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 
     if (getNextJokeBtn && jokesDiv) {
         getNextJokeBtn.addEventListener("click", async event => {
@@ -33,10 +29,10 @@ const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
                 const joke = await fetchJokeFromApi();
                 console.log(joke);
                 jokesDiv.innerHTML = joke;
+
             } catch (error) {
                 console.error("error, next joke btn not found", error);
             }
-
         });
 
     } else {

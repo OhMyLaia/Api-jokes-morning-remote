@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,11 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
 document.addEventListener("DOMContentLoaded", () => {
     addEventListenersFunction();
 });
-const api_calls_1 = require("../api/api-calls");
+import { fetchJokeFromApi } from "../api/api-calls.js";
 //! WE ARE IN HOME-PAGE BRANCH
 // <span id="weather-span">weather</span>
 // <div>
@@ -21,21 +19,15 @@ const api_calls_1 = require("../api/api-calls");
 //     <button type="button" id="next-joke-btn">Next joke</button>
 // </div>
 const jokesDiv = document.getElementById("jokes-div");
-if (jokesDiv) {
-    jokesDiv.innerHTML = "";
-}
-else {
-    console.error("error jokes-div not found");
-}
 function addEventListenersFunction() {
     return __awaiter(this, void 0, void 0, function* () {
-        const getNextJokeBtn = document.getElementById("next-joke-btn");
         const jokesDiv = document.getElementById("jokes-div");
+        const getNextJokeBtn = document.getElementById("next-joke-btn");
         if (getNextJokeBtn && jokesDiv) {
             getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
                 try {
-                    const joke = yield (0, api_calls_1.fetchJokeFromApi)();
+                    const joke = yield fetchJokeFromApi();
                     console.log(joke);
                     jokesDiv.innerHTML = joke;
                 }
