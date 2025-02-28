@@ -41,9 +41,11 @@ async function firstJoke() {
         try {
             const apiCalling = await fetchJokeFromApi();
             jokesDiv.innerHTML = apiCalling;
+            return apiCalling;
             
         } catch {
             jokesDiv.innerHTML = errorMessageJokes;
+            return null;
         }
     }
 }
@@ -51,52 +53,31 @@ async function firstJoke() {
 
 async function jokeRatingFun() {
 
-    const jokeString: string = await fetchJokeFromApi();
+    const jokeString = await firstJoke();
     const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
     // do i need this then? ->
-    selectedRating ? selectedRating.value : 0;
+    selectedRating === null ? console.error(`no rating selected`) : selectedRating.value;
+    jokeString === null || jokeString === undefined ? console.error(`no joke found`) : jokeString;
     let newJokeRating: object = {};
-
-    // if (selectedRating.value === Rating[1]) {
-    //     const newJokeRating = new Joke (jokeString, 1);
-    //     reportJokesArr.push(newJokeRating);
-    //     console.table(reportJokesArr);
-
-    // } else if (selectedRating.value === Rating[2]) {
-    //     const newJokeRating = new Joke (jokeString, 2);
-    //     reportJokesArr.push(newJokeRating);
-    //     console.table(reportJokesArr);
-
-    // } else if (selectedRating.value === Rating[3]) {
-    //     const newJokeRating = new Joke (jokeString, 3);
-    //     reportJokesArr.push(newJokeRating);
-    //     console.table(reportJokesArr);
-
-    // } else {
-    //     console.error(`This joke could not be rated`);
-    // }
 
 
     switch (selectedRating.value) {
         case "1" :
             newJokeRating = new Joke (jokeString, Rating.BadRating);
-            reportJokesArr.push(newJokeRating);
-            console.table(reportJokesArr);
             break;
 
         case "2" :
             newJokeRating = new Joke (jokeString, Rating.NeutralRating);
-            reportJokesArr.push(newJokeRating);
-            console.table(reportJokesArr);
             break;
 
         case "3" :
             newJokeRating = new Joke (jokeString, Rating.GoodRating);
-            reportJokesArr.push(newJokeRating);
-            console.table(reportJokesArr);
             break;
+        default :
+        console.error(`invalid rating`);
     }
-
+    reportJokesArr.push(newJokeRating);
+    console.table(reportJokesArr);
 }
 
 
