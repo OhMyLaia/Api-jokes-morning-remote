@@ -20,6 +20,10 @@ async function addEventListenersFunction() {
                 jokesDiv.innerHTML = (jokeObj as { joke: string }).joke;
                 console.log(jokeObj);
                 currentJoke = jokeObj;
+                const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
+                selectedRating.checked = false;
+
+
 
             } catch (error) {
                 console.error("error, next joke btn not found", error);
@@ -59,31 +63,55 @@ async function jokeRatingFun() {
     const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
     let joke = (currentJoke as {joke : string}).joke;
     let id = (currentJoke as {id : string}).id;
-
-    // do i need this then? ->
-    if (!currentJoke) { return console.error(`no joke found`) };
-    if (!selectedRating) { return console.error(`no rating found`) };
+    let score = (currentJoke as {score: number}).score;
     let newJokeRating: object = {};
 
-
-    switch (selectedRating.value) {
-        case "1" :
-            newJokeRating = new Joke (joke, Rating.BadRating, id);
-            break;
-
-        case "2" :
-            newJokeRating = new Joke (joke, Rating.NeutralRating, id);
-            break;
-
-        case "3" :
-            newJokeRating = new Joke (joke, Rating.GoodRating, id);
-            break;
-
-        default :
-        console.error(`invalid rating`);
+    if (!currentJoke) {
+        return console.error(`no joke found`)
     }
 
+    if (!selectedRating) {
+        return console.error(`no rating found`)
+    }
+
+
+    // this returns the object that is repeated
+    let repeatedJoke = reportJokesArr.find( element => {
+        let jokesId = (element as {id : string}).id
+        console.log(`this is jokesId -> ${jokesId} and this is id -> ${id}`);
+        if (jokesId === id) {
+            return element;
+        }
+    });
+    console.log(`this is repeatedJoke -> ${repeatedJoke}`);
+
+    if (!repeatedJoke) {
+
+        switch (selectedRating.value) {
+            case "1" :
+                newJokeRating = new Joke (joke, Rating.BadRating, id);
+                break;
+    
+            case "2" :
+                newJokeRating = new Joke (joke, Rating.NeutralRating, id);
+                break;
+    
+            case "3" :
+                newJokeRating = new Joke (joke, Rating.GoodRating, id);
+                break;
+    
+            default :
+            console.error(`invalid rating`);
+        }
     reportJokesArr.push(newJokeRating);
+
+    } else {
+        // let repeatedJokeScore: number = (repeatedJoke as {score: number}).score;
+        // console.log(`this is the repeated score -> `)
+        // repeatedJokeScore = parseInt(selectedRating.value);
+        (repeatedJoke as { score: Rating }).score = parseInt(selectedRating.value);
+    }
+    console.log(`this is repeatedJoke -> ${repeatedJoke}`);
     console.table(reportJokesArr);
 }
 

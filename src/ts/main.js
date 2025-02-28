@@ -25,6 +25,8 @@ function addEventListenersFunction() {
                     jokesDiv.innerHTML = jokeObj.joke;
                     console.log(jokeObj);
                     currentJoke = jokeObj;
+                    const selectedRating = document.querySelector(".joke-rating-input input:checked");
+                    selectedRating.checked = false;
                 }
                 catch (error) {
                     console.error("error, next joke btn not found", error);
@@ -62,30 +64,46 @@ function jokeRatingFun() {
         const selectedRating = document.querySelector(".joke-rating-input input:checked");
         let joke = currentJoke.joke;
         let id = currentJoke.id;
-        // do i need this then? ->
+        let score = currentJoke.score;
+        let newJokeRating = {};
         if (!currentJoke) {
             return console.error(`no joke found`);
         }
-        ;
         if (!selectedRating) {
             return console.error(`no rating found`);
         }
-        ;
-        let newJokeRating = {};
-        switch (selectedRating.value) {
-            case "1":
-                newJokeRating = new Joke(joke, Rating.BadRating, id);
-                break;
-            case "2":
-                newJokeRating = new Joke(joke, Rating.NeutralRating, id);
-                break;
-            case "3":
-                newJokeRating = new Joke(joke, Rating.GoodRating, id);
-                break;
-            default:
-                console.error(`invalid rating`);
+        // this returns the object that is repeated
+        let repeatedJoke = reportJokesArr.find(element => {
+            let jokesId = element.id;
+            console.log(`this is jokesId -> ${jokesId} and this is id -> ${id}`);
+            if (jokesId === id) {
+                return element;
+            }
+        });
+        console.log(`this is repeatedJoke -> ${repeatedJoke}`);
+        if (!repeatedJoke) {
+            switch (selectedRating.value) {
+                case "1":
+                    newJokeRating = new Joke(joke, Rating.BadRating, id);
+                    break;
+                case "2":
+                    newJokeRating = new Joke(joke, Rating.NeutralRating, id);
+                    break;
+                case "3":
+                    newJokeRating = new Joke(joke, Rating.GoodRating, id);
+                    break;
+                default:
+                    console.error(`invalid rating`);
+            }
+            reportJokesArr.push(newJokeRating);
         }
-        reportJokesArr.push(newJokeRating);
+        else {
+            // let repeatedJokeScore: number = (repeatedJoke as {score: number}).score;
+            // console.log(`this is the repeated score -> `)
+            // repeatedJokeScore = parseInt(selectedRating.value);
+            repeatedJoke.score = parseInt(selectedRating.value);
+        }
+        console.log(`this is repeatedJoke -> ${repeatedJoke}`);
         console.table(reportJokesArr);
     });
 }
