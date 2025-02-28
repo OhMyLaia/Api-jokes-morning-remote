@@ -23,8 +23,6 @@ async function addEventListenersFunction() {
                 const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
                 selectedRating.checked = false;
 
-
-
             } catch (error) {
                 console.error("error, next joke btn not found", error);
             }
