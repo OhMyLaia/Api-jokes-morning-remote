@@ -20,7 +20,7 @@ async function addEventListenersFunction() {
                 jokesDiv.innerHTML = (jokeObj as { joke: string }).joke;
                 console.log(jokeObj);
                 currentJoke = jokeObj;
-                const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
+                const selectedRating = document.querySelector("input[name='inlineRadioOptions']:checked") as HTMLInputElement;
                 selectedRating.checked = false;
 
             } catch (error) {
@@ -65,11 +65,11 @@ async function jokeRatingFun() {
     let newJokeRating: object = {};
 
     if (!currentJoke) {
-        return console.error(`no joke found`)
+        return console.error(`no joke found`);
     }
 
     if (!selectedRating) {
-        return console.error(`no rating found`)
+        return console.error(`no rating found`);
     }
 
 

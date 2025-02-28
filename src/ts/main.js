@@ -25,7 +25,7 @@ function addEventListenersFunction() {
                     jokesDiv.innerHTML = jokeObj.joke;
                     console.log(jokeObj);
                     currentJoke = jokeObj;
-                    const selectedRating = document.querySelector(".joke-rating-input input:checked");
+                    const selectedRating = document.querySelector("input[name='inlineRadioOptions']:checked");
                     selectedRating.checked = false;
                 }
                 catch (error) {
