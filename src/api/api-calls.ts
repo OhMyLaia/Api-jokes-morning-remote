@@ -12,7 +12,7 @@ export async function fetchJokeFromApi(): Promise<string> {
         console.log('API Response:', data);
         console.log(`joke -> ${data.joke}`);
         counter++
-        console.log(`counting -> ${counter}`)
+        console.log(`counting -> ${counter}`);
         return data.joke;
     })
     .catch(error => {

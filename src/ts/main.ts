@@ -7,6 +7,7 @@ const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 const feedbackBtn: HTMLElement | null = document.getElementById("feedback-btn");
 const reportJokesArr: Array<object> = [];
+let currentJoke: string = "";
 
 async function addEventListenersFunction() {
 
@@ -41,7 +42,8 @@ async function firstJoke() {
         try {
             const apiCalling = await fetchJokeFromApi();
             jokesDiv.innerHTML = apiCalling;
-            return apiCalling;
+            currentJoke = apiCalling;
+            return currentJoke;
             
         } catch {
             jokesDiv.innerHTML = errorMessageJokes;
@@ -53,25 +55,24 @@ async function firstJoke() {
 
 async function jokeRatingFun() {
 
-    const jokeString = await firstJoke();
     const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
     // do i need this then? ->
-    selectedRating === null ? console.error(`no rating selected`) : selectedRating.value;
-    jokeString === null || jokeString === undefined ? console.error(`no joke found`) : jokeString;
+    if (!currentJoke) { return console.error(`no joke found`) };
+    if (!selectedRating) { return console.error(`no rating found`) };
     let newJokeRating: object = {};
 
 
     switch (selectedRating.value) {
         case "1" :
-            newJokeRating = new Joke (jokeString, Rating.BadRating);
+            newJokeRating = new Joke (currentJoke, Rating.BadRating);
             break;
 
         case "2" :
-            newJokeRating = new Joke (jokeString, Rating.NeutralRating);
+            newJokeRating = new Joke (currentJoke, Rating.NeutralRating);
             break;
 
         case "3" :
-            newJokeRating = new Joke (jokeString, Rating.GoodRating);
+            newJokeRating = new Joke (currentJoke, Rating.GoodRating);
             break;
         default :
         console.error(`invalid rating`);

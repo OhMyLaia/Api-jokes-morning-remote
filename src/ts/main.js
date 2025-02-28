@@ -14,6 +14,7 @@ const jokesDiv = document.getElementById("jokes-div");
 const getNextJokeBtn = document.getElementById("next-joke-btn");
 const feedbackBtn = document.getElementById("feedback-btn");
 const reportJokesArr = [];
+let currentJoke = "";
 function addEventListenersFunction() {
     return __awaiter(this, void 0, void 0, function* () {
         if (getNextJokeBtn && jokesDiv) {
@@ -45,51 +46,43 @@ function firstJoke() {
             try {
                 const apiCalling = yield fetchJokeFromApi();
                 jokesDiv.innerHTML = apiCalling;
+                currentJoke = apiCalling;
+                return currentJoke;
             }
             catch (_a) {
                 jokesDiv.innerHTML = errorMessageJokes;
+                return null;
             }
         }
     });
 }
 function jokeRatingFun() {
     return __awaiter(this, void 0, void 0, function* () {
-        const jokeString = yield fetchJokeFromApi();
         const selectedRating = document.querySelector(".joke-rating-input input:checked");
         // do i need this then? ->
-        selectedRating ? selectedRating.value : 0;
+        if (!currentJoke) {
+            return console.error(`no joke found`);
+        }
+        ;
+        if (!selectedRating) {
+            return console.error(`no rating found`);
+        }
+        ;
         let newJokeRating = {};
-        // if (selectedRating.value === Rating[1]) {
-        //     const newJokeRating = new Joke (jokeString, 1);
-        //     reportJokesArr.push(newJokeRating);
-        //     console.table(reportJokesArr);
-        // } else if (selectedRating.value === Rating[2]) {
-        //     const newJokeRating = new Joke (jokeString, 2);
-        //     reportJokesArr.push(newJokeRating);
-        //     console.table(reportJokesArr);
-        // } else if (selectedRating.value === Rating[3]) {
-        //     const newJokeRating = new Joke (jokeString, 3);
-        //     reportJokesArr.push(newJokeRating);
-        //     console.table(reportJokesArr);
-        // } else {
-        //     console.error(`This joke could not be rated`);
-        // }
         switch (selectedRating.value) {
             case "1":
-                newJokeRating = new Joke(jokeString, Rating.BadRating);
-                reportJokesArr.push(newJokeRating);
-                console.table(reportJokesArr);
+                newJokeRating = new Joke(currentJoke, Rating.BadRating);
                 break;
             case "2":
-                newJokeRating = new Joke(jokeString, Rating.NeutralRating);
-                reportJokesArr.push(newJokeRating);
-                console.table(reportJokesArr);
+                newJokeRating = new Joke(currentJoke, Rating.NeutralRating);
                 break;
             case "3":
-                newJokeRating = new Joke(jokeString, Rating.GoodRating);
-                reportJokesArr.push(newJokeRating);
-                console.table(reportJokesArr);
+                newJokeRating = new Joke(currentJoke, Rating.GoodRating);
                 break;
+            default:
+                console.error(`invalid rating`);
         }
+        reportJokesArr.push(newJokeRating);
+        console.table(reportJokesArr);
     });
 }
