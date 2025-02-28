@@ -54,24 +54,46 @@ async function jokeRatingFun() {
     const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
     // do i need this then? ->
     selectedRating ? selectedRating.value : 0;
+    let newJokeRating: object = {};
 
-    if (selectedRating.value === Rating[1]) {
-        const newJokeRating = new Joke (jokeString, 1);
-        reportJokesArr.push(newJokeRating);
-        console.table(reportJokesArr);
+    // if (selectedRating.value === Rating[1]) {
+    //     const newJokeRating = new Joke (jokeString, 1);
+    //     reportJokesArr.push(newJokeRating);
+    //     console.table(reportJokesArr);
 
-    } else if (selectedRating.value === Rating[2]) {
-        const newJokeRating = new Joke (jokeString, 2);
-        reportJokesArr.push(newJokeRating);
-        console.table(reportJokesArr);
+    // } else if (selectedRating.value === Rating[2]) {
+    //     const newJokeRating = new Joke (jokeString, 2);
+    //     reportJokesArr.push(newJokeRating);
+    //     console.table(reportJokesArr);
 
-    } else if (selectedRating.value === Rating[3]) {
-        const newJokeRating = new Joke (jokeString, 3);
-        reportJokesArr.push(newJokeRating);
-        console.table(reportJokesArr);
+    // } else if (selectedRating.value === Rating[3]) {
+    //     const newJokeRating = new Joke (jokeString, 3);
+    //     reportJokesArr.push(newJokeRating);
+    //     console.table(reportJokesArr);
 
-    } else {
-        console.error(`This joke could not be rated`);
+    // } else {
+    //     console.error(`This joke could not be rated`);
+    // }
+
+
+    switch (selectedRating.value) {
+        case Rating[1] :
+            newJokeRating = new Joke (jokeString, 1);
+            reportJokesArr.push(newJokeRating);
+            console.table(reportJokesArr);
+            break;
+
+        case Rating[2] :
+            newJokeRating = new Joke (jokeString, 2);
+            reportJokesArr.push(newJokeRating);
+            console.table(reportJokesArr);
+            break;
+
+        case Rating[3] :
+            newJokeRating = new Joke (jokeString, 3);
+            reportJokesArr.push(newJokeRating);
+            console.table(reportJokesArr);
+            break;
     }
 
 }
