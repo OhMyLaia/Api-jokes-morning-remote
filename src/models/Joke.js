@@ -1,4 +1,10 @@
 "use strict";
+var Rating;
+(function (Rating) {
+    Rating[Rating["BadRating"] = 1] = "BadRating";
+    Rating[Rating["NeutralRating"] = 2] = "NeutralRating";
+    Rating[Rating["GoodRating"] = 3] = "GoodRating";
+})(Rating || (Rating = {}));
 class Joke {
     constructor(joke, score) {
         this._joke = joke;

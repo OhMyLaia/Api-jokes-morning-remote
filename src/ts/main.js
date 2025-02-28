@@ -11,25 +11,10 @@ import { fetchJokeFromApi } from "../api/api-calls.js";
 document.addEventListener("DOMContentLoaded", firstJoke);
 const jokesDiv = document.getElementById("jokes-div");
 const getNextJokeBtn = document.getElementById("next-joke-btn");
-function firstJoke() {
-    return __awaiter(this, void 0, void 0, function* () {
-        const errorMessageJokes = `Ups! No jokes today :(`;
-        if (jokesDiv) {
-            try {
-                const apiCalling = yield fetchJokeFromApi();
-                jokesDiv.innerHTML = apiCalling;
-            }
-            catch (_a) {
-                jokesDiv.innerHTML = errorMessageJokes;
-            }
-        }
-    });
-}
+const feedbackBtn = document.getElementById("feedback-btn");
+const reportJokesArr = [];
 function addEventListenersFunction() {
     return __awaiter(this, void 0, void 0, function* () {
-        // if (jokesDiv) {
-        //     jokesDiv.innerHTML = await fetchJokeFromApi();
-        // }
         if (getNextJokeBtn && jokesDiv) {
             getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
@@ -46,6 +31,34 @@ function addEventListenersFunction() {
         else {
             console.error(`Next-joke-btn or jokes-div not found`);
         }
+        if (feedbackBtn && jokesDiv) {
+            feedbackBtn.addEventListener("click", jokeRatingFun);
+        }
     });
 }
 addEventListenersFunction();
+function firstJoke() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errorMessageJokes = `Ups! No jokes today :(`;
+        if (jokesDiv) {
+            try {
+                const apiCalling = yield fetchJokeFromApi();
+                jokesDiv.innerHTML = apiCalling;
+            }
+            catch (_a) {
+                jokesDiv.innerHTML = errorMessageJokes;
+            }
+        }
+    });
+}
+function jokeRatingFun() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const jokeString = yield fetchJokeFromApi();
+        const selectedRating = document.querySelector(".joke-rating-input input:checked");
+        if (selectedRating) {
+            console.log(`rating -> ${selectedRating.value}`);
+        }
+        // switch (jokeRatingInput) {
+        // }
+    });
+}

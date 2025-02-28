@@ -1,9 +1,16 @@
+enum Rating {
+    BadRating = 1,
+    NeutralRating,
+    GoodRating
+}
+
+
 class Joke {
     private _joke: string;
-    private _score: number;
+    private _score: Rating;
     private _date: string;
 
-    constructor (joke: string, score: number) {
+    constructor (joke: string, score: Rating) {
         this._joke = joke;
         this._score = score;
         this._date = new Date().toISOString();
@@ -11,7 +18,7 @@ class Joke {
 
 
     get joke () : string { return this._joke };
-    get score () : number { return this._score };
+    get score () : Rating { return this._score };
     get date () : string { return this._date };
 
     set score (newValue : number) {
