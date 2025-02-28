@@ -7,27 +7,29 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-document.addEventListener("DOMContentLoaded", () => {
-    addEventListenersFunction();
-    fetchJokeFromApi();
-});
 import { fetchJokeFromApi } from "../api/api-calls.js";
-//! WE ARE IN HOME-PAGE BRANCH
-// <span id="weather-span">weather</span>
-// <div>
-//     <h1>good morning ✨</h1>
-//     <div id="jokes-div"></div>
-//     <button type="button" id="next-joke-btn">Next joke</button>
-// </div>
+document.addEventListener("DOMContentLoaded", firstJoke);
 const jokesDiv = document.getElementById("jokes-div");
-fetchJokeFromApi();
+const getNextJokeBtn = document.getElementById("next-joke-btn");
+function firstJoke() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const errorMessageJokes = `Ups! No jokes today :(`;
+        if (jokesDiv) {
+            try {
+                const apiCalling = yield fetchJokeFromApi();
+                jokesDiv.innerHTML = apiCalling;
+            }
+            catch (_a) {
+                jokesDiv.innerHTML = errorMessageJokes;
+            }
+        }
+    });
+}
 function addEventListenersFunction() {
     return __awaiter(this, void 0, void 0, function* () {
-        const jokesDiv = document.getElementById("jokes-div");
-        const getNextJokeBtn = document.getElementById("next-joke-btn");
-        if (jokesDiv) {
-            jokesDiv.innerHTML = yield fetchJokeFromApi();
-        }
+        // if (jokesDiv) {
+        //     jokesDiv.innerHTML = await fetchJokeFromApi();
+        // }
         if (getNextJokeBtn && jokesDiv) {
             getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();

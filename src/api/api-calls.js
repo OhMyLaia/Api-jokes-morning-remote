@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 export function fetchJokeFromApi() {
     return __awaiter(this, void 0, void 0, function* () {
+        let counter = 0;
         return fetch("https://icanhazdadjoke.com/", {
             headers: {
                 "Accept": "application/json"
@@ -16,10 +17,10 @@ export function fetchJokeFromApi() {
         })
             .then(res => res.json())
             .then(data => {
-            let counter = 0;
-            counter++;
             console.log('API Response:', data);
             console.log(`joke -> ${data.joke}`);
+            counter++;
+            console.log(`counting -> ${counter}`);
             return data.joke;
         })
             .catch(error => {

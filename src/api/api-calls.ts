@@ -1,5 +1,6 @@
 
 export async function fetchJokeFromApi(): Promise<string> {
+    let counter: number = 0;
 
     return fetch("https://icanhazdadjoke.com/", {
         headers: {
@@ -8,10 +9,10 @@ export async function fetchJokeFromApi(): Promise<string> {
     })
     .then(res => res.json())
     .then(data => {
-        let counter: number = 0;
-        counter ++;
         console.log('API Response:', data);
         console.log(`joke -> ${data.joke}`);
+        counter++
+        console.log(`counting -> ${counter}`)
         return data.joke;
     })
     .catch(error => {

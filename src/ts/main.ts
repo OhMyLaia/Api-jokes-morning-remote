@@ -1,31 +1,24 @@
-document.addEventListener("DOMContentLoaded", () => {
-    addEventListenersFunction();
-    fetchJokeFromApi();
-});
-
 import { fetchJokeFromApi } from "../api/api-calls.js";
 
-//! WE ARE IN HOME-PAGE BRANCH
-
-// <span id="weather-span">weather</span>
-// <div>
-//     <h1>good morning ✨</h1>
-//     <div id="jokes-div"></div>
-//     <button type="button" id="next-joke-btn">Next joke</button>
-// </div>
+document.addEventListener("DOMContentLoaded", firstJoke);
 
 const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
+const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 
-fetchJokeFromApi();
+async function firstJoke() {
+    const errorMessageJokes = `Ups! No jokes today :(`;
+    if (jokesDiv) {
+        try {
+            const apiCalling = await fetchJokeFromApi();
+            jokesDiv.innerHTML = apiCalling;
+            
+        } catch {
+            jokesDiv.innerHTML = errorMessageJokes;
+        }
+    }
+}
 
 async function addEventListenersFunction() {
-    
-    const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
-    const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
-
-    if (jokesDiv) {
-        jokesDiv.innerHTML = await fetchJokeFromApi();
-    }
 
     if (getNextJokeBtn && jokesDiv) {
         getNextJokeBtn.addEventListener("click", async event => {
