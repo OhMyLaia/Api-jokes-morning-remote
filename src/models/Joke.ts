@@ -25,3 +25,5 @@ class Joke {
         this._score = newValue;
     }
 }
+
+export { Rating, Joke };

@@ -1,4 +1,5 @@
 import { fetchJokeFromApi } from "../api/api-calls.js";
+import { Rating, Joke } from "../models/Joke.js";
 
 document.addEventListener("DOMContentLoaded", firstJoke);
 
@@ -77,23 +78,25 @@ async function jokeRatingFun() {
 
 
     switch (selectedRating.value) {
-        case Rating[1] :
-            newJokeRating = new Joke (jokeString, 1);
+        case "1" :
+            newJokeRating = new Joke (jokeString, Rating.BadRating);
             reportJokesArr.push(newJokeRating);
             console.table(reportJokesArr);
             break;
 
-        case Rating[2] :
-            newJokeRating = new Joke (jokeString, 2);
+        case "2" :
+            newJokeRating = new Joke (jokeString, Rating.NeutralRating);
             reportJokesArr.push(newJokeRating);
             console.table(reportJokesArr);
             break;
 
-        case Rating[3] :
-            newJokeRating = new Joke (jokeString, 3);
+        case "3" :
+            newJokeRating = new Joke (jokeString, Rating.GoodRating);
             reportJokesArr.push(newJokeRating);
             console.table(reportJokesArr);
             break;
     }
 
 }
+
+

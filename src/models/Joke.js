@@ -1,4 +1,3 @@
-"use strict";
 var Rating;
 (function (Rating) {
     Rating[Rating["BadRating"] = 1] = "BadRating";
@@ -21,3 +20,4 @@ class Joke {
         this._score = newValue;
     }
 }
+export { Rating, Joke };

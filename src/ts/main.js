@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import { fetchJokeFromApi } from "../api/api-calls.js";
+import { Rating, Joke } from "../models/Joke.js";
 document.addEventListener("DOMContentLoaded", firstJoke);
 const jokesDiv = document.getElementById("jokes-div");
 const getNextJokeBtn = document.getElementById("next-joke-btn");
@@ -22,6 +23,7 @@ function addEventListenersFunction() {
                     const joke = yield fetchJokeFromApi();
                     jokesDiv.innerHTML = joke;
                     console.log(joke);
+                    console.table(reportJokesArr);
                 }
                 catch (error) {
                     console.error("error, next joke btn not found", error);
@@ -55,10 +57,40 @@ function jokeRatingFun() {
     return __awaiter(this, void 0, void 0, function* () {
         const jokeString = yield fetchJokeFromApi();
         const selectedRating = document.querySelector(".joke-rating-input input:checked");
-        if (selectedRating) {
-            console.log(`rating -> ${selectedRating.value}`);
-        }
-        // switch (jokeRatingInput) {
+        // do i need this then? ->
+        selectedRating ? selectedRating.value : 0;
+        let newJokeRating = {};
+        // if (selectedRating.value === Rating[1]) {
+        //     const newJokeRating = new Joke (jokeString, 1);
+        //     reportJokesArr.push(newJokeRating);
+        //     console.table(reportJokesArr);
+        // } else if (selectedRating.value === Rating[2]) {
+        //     const newJokeRating = new Joke (jokeString, 2);
+        //     reportJokesArr.push(newJokeRating);
+        //     console.table(reportJokesArr);
+        // } else if (selectedRating.value === Rating[3]) {
+        //     const newJokeRating = new Joke (jokeString, 3);
+        //     reportJokesArr.push(newJokeRating);
+        //     console.table(reportJokesArr);
+        // } else {
+        //     console.error(`This joke could not be rated`);
         // }
+        switch (selectedRating.value) {
+            case Rating[1]:
+                newJokeRating = new Joke(jokeString, 1);
+                reportJokesArr.push(newJokeRating);
+                console.table(reportJokesArr);
+                break;
+            case Rating[2]:
+                newJokeRating = new Joke(jokeString, 2);
+                reportJokesArr.push(newJokeRating);
+                console.table(reportJokesArr);
+                break;
+            case Rating[3]:
+                newJokeRating = new Joke(jokeString, 3);
+                reportJokesArr.push(newJokeRating);
+                console.table(reportJokesArr);
+                break;
+        }
     });
 }
