@@ -1,0 +1,72 @@
+body {
+    background-color: rgb(251, 248, 237);
+}
+
+
+/* #egg-yolk-div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1; 
+    width: 80vw; 
+    opacity: 0.5; 
+}
+
+#egg-yolk {
+    width: 100%;
+    height: auto;
+    display: block;
+} */
+
+
+#egg-yolk-div {
+    position: absolute;
+    top: 40%;
+    left: 52%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 96%;
+}
+
+#egg-yolk {
+    position: relative;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#good-morning-h1 {
+    font-size: 4em;
+}
+
+#jokes-div {
+    align-self: center;
+    width: 80%;
+    margin-left: 2em !important;
+}
+
+#next-joke-btn {
+    background-color: rgb(251, 248, 237);
+    border-radius: 2em;
+    border-color: rgb(255, 171, 68);
+    border-width: 0.8em;
+}
+
+#next-joke-btn:hover {
+    background-color: rgb(255, 171, 68);
+    box-shadow: rgb(255, 171, 68) !important;
+}
+
+#feedback-btn {
+    background-color: rgb(251, 248, 237);
+    border-radius: 2em;
+    border-color: rgb(254, 204, 123);
+    border-width: 1em;
+}
+
+#feedback-btn:hover {
+    background-color: rgb(254, 204, 123);
+    box-shadow: rgb(255, 171, 68) !important;
+}
+
