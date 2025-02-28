@@ -7,7 +7,7 @@ const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 const feedbackBtn: HTMLElement | null = document.getElementById("feedback-btn");
 const reportJokesArr: Array<object> = [];
-let currentJoke: string = "";
+let currentJoke: object = {};
 
 async function addEventListenersFunction() {
 
@@ -16,9 +16,10 @@ async function addEventListenersFunction() {
             event.preventDefault();
 
             try {
-                const joke = await fetchJokeFromApi();
-                jokesDiv.innerHTML = joke;
-                console.log(joke);
+                const jokeObj = await fetchJokeFromApi();
+                jokesDiv.innerHTML = (jokeObj as { joke: string }).joke;
+                console.log(jokeObj);
+                currentJoke = jokeObj;
 
             } catch (error) {
                 console.error("error, next joke btn not found", error);
@@ -41,7 +42,7 @@ async function firstJoke() {
     if (jokesDiv) {
         try {
             const apiCalling = await fetchJokeFromApi();
-            jokesDiv.innerHTML = apiCalling;
+            jokesDiv.innerHTML = (apiCalling as { joke : string }).joke;
             currentJoke = apiCalling;
             return currentJoke;
             
@@ -56,6 +57,9 @@ async function firstJoke() {
 async function jokeRatingFun() {
 
     const selectedRating = document.querySelector(".joke-rating-input input:checked") as HTMLInputElement;
+    let joke = (currentJoke as {joke : string}).joke;
+    let id = (currentJoke as {id : string}).id;
+
     // do i need this then? ->
     if (!currentJoke) { return console.error(`no joke found`) };
     if (!selectedRating) { return console.error(`no rating found`) };
@@ -64,19 +68,21 @@ async function jokeRatingFun() {
 
     switch (selectedRating.value) {
         case "1" :
-            newJokeRating = new Joke (currentJoke, Rating.BadRating);
+            newJokeRating = new Joke (joke, Rating.BadRating, id);
             break;
 
         case "2" :
-            newJokeRating = new Joke (currentJoke, Rating.NeutralRating);
+            newJokeRating = new Joke (joke, Rating.NeutralRating, id);
             break;
 
         case "3" :
-            newJokeRating = new Joke (currentJoke, Rating.GoodRating);
+            newJokeRating = new Joke (joke, Rating.GoodRating, id);
             break;
+
         default :
         console.error(`invalid rating`);
     }
+
     reportJokesArr.push(newJokeRating);
     console.table(reportJokesArr);
 }

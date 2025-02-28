@@ -1,5 +1,5 @@
 
-export async function fetchJokeFromApi(): Promise<string> {
+export async function fetchJokeFromApi(): Promise<object> {
     let counter: number = 0;
 
     return fetch("https://icanhazdadjoke.com/", {
@@ -13,12 +13,12 @@ export async function fetchJokeFromApi(): Promise<string> {
         console.log(`joke -> ${data.joke}`);
         counter++
         console.log(`counting -> ${counter}`);
-        return data.joke;
+        return data
     })
     .catch(error => {
         const errorMssg: string = "Error, no jokes today";
         console.error(errorMssg, error);
-        return errorMssg;
+        return;
     });
 }
 
