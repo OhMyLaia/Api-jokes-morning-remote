@@ -11,7 +11,7 @@ body {
     left: 52%;
     transform: translate(-50%, -50%);
     z-index: -1;
-    width: 100%;
+    width: 90%;
 }
 
 #egg-yolk {
