@@ -1,32 +1,17 @@
 body {
     background-color: rgb(251, 248, 237);
+    margin: 0 auto !important;
+    overflow: hidden !important;
 }
-
-
-/* #egg-yolk-div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1; 
-    width: 80vw; 
-    opacity: 0.5; 
-}
-
-#egg-yolk {
-    width: 100%;
-    height: auto;
-    display: block;
-} */
 
 
 #egg-yolk-div {
     position: absolute;
-    top: 40%;
+    top: 30%;
     left: 52%;
     transform: translate(-50%, -50%);
     z-index: -1;
-    width: 96%;
+    width: 100%;
 }
 
 #egg-yolk {
@@ -70,3 +55,40 @@ body {
     box-shadow: rgb(255, 171, 68) !important;
 }
 
+#rating-col {
+    width: 100%;
+    font-size: smaller;
+    /* gap: 0em !important; */
+}
+
+
+@media (min-width: 768px) {
+    #egg-yolk-div {
+        width: 100%;
+    }
+
+    #egg-yolk {
+        width: 60%;
+        /* max-width: 600rem; */
+    }
+}
+
+@media (min-width: 1024) {
+    #egg-yolk-div {
+        width: 100%;
+        top: 40%;
+        left: 52%;
+    }
+
+    /* position: absolute;
+
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    width: 100%; */
+
+    #egg-yolk {
+        width: 100%;
+        /* max-width: 300px; */
+        
+    }
+}
