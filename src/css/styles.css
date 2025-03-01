@@ -1,13 +1,14 @@
 body {
     background-color: rgb(251, 248, 237);
-    margin: 0 auto !important;
+    margin: 0 auto;
+    padding: 3em;
     overflow: hidden !important;
 }
 
 
 #egg-yolk-div {
     position: absolute;
-    top: 30%;
+    top: 35%;
     left: 52%;
     transform: translate(-50%, -50%);
     z-index: -1;
