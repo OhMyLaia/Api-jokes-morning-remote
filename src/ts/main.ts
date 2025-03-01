@@ -1,16 +1,21 @@
 import { fetchJokeFromApi } from "../api/api-calls.js";
 import { Rating, Joke } from "../models/Joke.js";
+import { getUserLocation } from "../api/api-calls.js";
+import { time } from "console";
 
 document.addEventListener("DOMContentLoaded", firstJoke);
+document.addEventListener("DOMContentLoaded", showWeather);
+
 
 const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 const feedbackBtn: HTMLElement | null = document.getElementById("feedback-btn");
+const weatherSpan: HTMLElement | null = document.getElementById("weather-span");
+
 const reportJokesArr: Array<object> = [];
 let currentJoke: object = {};
 
 async function addEventListenersFunction() {
-
     if (getNextJokeBtn && jokesDiv) {
         getNextJokeBtn.addEventListener("click", async event => {
             event.preventDefault();
@@ -38,6 +43,25 @@ async function addEventListenersFunction() {
 }
 
 addEventListenersFunction();
+
+async function showWeather() {
+    if (weatherSpan) {
+        try {
+            const apiWeatherCalling = await getUserLocation();
+            const currentTemperature = (apiWeatherCalling as {
+                hourly : { temperature_2m : number[] }
+            })
+            .hourly.temperature_2m[0];
+            console.log(`temperature -> ${currentTemperature}`)
+            weatherSpan.innerHTML = currentTemperature.toString();
+            console.table(`timezone -> ${JSON.stringify(apiWeatherCalling)}`);
+
+        } catch(error) {
+        console.error(`error, weather span or api response not found`, error)
+        }
+    }
+}
+showWeather();
 
 async function firstJoke() {
     const errorMessageJokes = `Ups! No jokes today :(`;

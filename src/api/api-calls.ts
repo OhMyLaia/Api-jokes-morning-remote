@@ -1,7 +1,6 @@
-import { API_KEY } from "./api-key";
+// import { API_KEY } from "./api-key.js";
 
 export async function fetchJokeFromApi(): Promise<object> {
-
     return fetch("https://icanhazdadjoke.com/", {
         headers: {
             "Accept": "application/json"
@@ -9,9 +8,9 @@ export async function fetchJokeFromApi(): Promise<object> {
     })
     .then(res => res.json())
     .then(data => {
-        console.log('API Response:', data);
+        console.log(`API response: ${data}`);
         console.log(`joke -> ${data.joke}`);
-        return data
+        return data;
     })
     .catch(error => {
         const errorMssg: string = "Error, no jokes today";
@@ -20,21 +19,35 @@ export async function fetchJokeFromApi(): Promise<object> {
     });
 }
 
-export function getUserLocation() {
-    navigator.geolocation.getCurrentPosition(
+export function getUserLocation(): Promise<object> {
+    return new Promise ((resolve, reject) => {
+
+        navigator.geolocation.getCurrentPosition(
+    
         function(position) {
             const userLatitude: number = position.coords.latitude;
             const userLongitude: number = position.coords.longitude;
-
             console.log(`Latitude: ${userLatitude}, Longitude: ${userLongitude}`);
+    
+            resolve(fetchWeatherFromApi(userLatitude, userLongitude))},
 
-            fetchWeatherFromApi(userLatitude, userLongitude);
-                }, function(error) {
-                    console.error("Error getting the location: ", error);
+        function(error) {
+            reject(console.error("Error getting the location: ", error));
         });
+    });
 }
 
-export async function fetchWeatherFromApi(latitude: number, longitude: number): Promise<object> {
-    
-    return fetch(`https://api.openweathermap.org/data/3.0/onecall?lat=${latitude}&lon=${longitude}&exclude={part}&appid=${API_KEY}`)
+async function fetchWeatherFromApi(latitude: number, longitude: number): Promise<object> {
+    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.toFixed(2)}&longitude=${longitude.toFixed(2)}&hourly=temperature_2m`)
+    .then(res => res.json())
+    .then( data => {
+        console.log(`API weather response: ${data}`);
+        return data;
+    })
+    .catch(error => {
+        const errorMssg: string = "Error, no weather today";
+        console.error(errorMssg, error);
+        return;
+    })
+
 }
