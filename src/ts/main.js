@@ -53,8 +53,9 @@ function showWeather() {
                 const currentTemperature = apiWeatherCalling
                     .hourly.temperature_2m[0];
                 console.log(`temperature -> ${currentTemperature}`);
-                weatherSpan.innerHTML = currentTemperature.toString();
+                // weatherSpan.innerHTML = `Temperature: ${currentTemperature.toString()}°C`;
                 console.table(`timezone -> ${JSON.stringify(apiWeatherCalling)}`);
+                return currentTemperature;
             }
             catch (error) {
                 console.error(`error, weather span or api response not found`, error);
@@ -62,7 +63,32 @@ function showWeather() {
         }
     });
 }
-showWeather();
+// showWeather();
+function showEmojiWeather() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const temperature = yield showWeather();
+            if (temperature && weatherSpan) {
+                if (temperature < 15) {
+                    weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C ❄️`;
+                }
+                else if (temperature > 15 && temperature < 25) {
+                    weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C 🧥`;
+                }
+                else if (temperature > 25) {
+                    weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C 🥵`;
+                }
+            }
+            else if (weatherSpan) {
+                weatherSpan.innerHTML = `Uncertain ❓`;
+            }
+        }
+        catch (error) {
+            console.error(`could not show temperature`, error);
+        }
+    });
+}
+showEmojiWeather();
 function firstJoke() {
     return __awaiter(this, void 0, void 0, function* () {
         const errorMessageJokes = `Ups! No jokes today :(`;

@@ -42,7 +42,6 @@ export function getUserLocation() {
 }
 function fetchWeatherFromApi(latitude, longitude) {
     return __awaiter(this, void 0, void 0, function* () {
-        // return fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m`)
         return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.toFixed(2)}&longitude=${longitude.toFixed(2)}&hourly=temperature_2m`)
             .then(res => res.json())
             .then(data => {
