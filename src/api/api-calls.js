@@ -55,3 +55,18 @@ function fetchWeatherFromApi(latitude, longitude) {
         });
     });
 }
+export function fetchDifferentJokesFromApi() {
+    return __awaiter(this, void 0, void 0, function* () {
+        return fetch(`https://official-joke-api.appspot.com/random_joke`)
+            .then(res => res.json())
+            .then(data => {
+            console.log(`Jokes2 response: ${data.setup} ... ${data.punchline}`);
+            return data;
+        })
+            .catch(error => {
+            const errorMssg = "Error, no weather today";
+            console.error(errorMssg, error);
+            return;
+        });
+    });
+}

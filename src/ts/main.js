@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 import { fetchJokeFromApi } from "../api/api-calls.js";
 import { Rating, Joke } from "../models/Joke.js";
-import { getUserLocation } from "../api/api-calls.js";
+import { getUserLocation, fetchDifferentJokesFromApi } from "../api/api-calls.js";
 document.addEventListener("DOMContentLoaded", firstJoke);
 document.addEventListener("DOMContentLoaded", showWeather);
 const jokesDiv = document.getElementById("jokes-div");
@@ -89,15 +89,42 @@ function showEmojiWeather() {
     });
 }
 showEmojiWeather();
+function currentTime(param) {
+    const now = new Date();
+    const hour = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    switch (param) {
+        case "hour":
+            return hour;
+        case "minutes":
+            return minutes;
+        case "seconds":
+            return seconds;
+        default:
+            throw new Error("Invalid parameter");
+    }
+}
 function firstJoke() {
     return __awaiter(this, void 0, void 0, function* () {
         const errorMessageJokes = `Ups! No jokes today :(`;
+        const time = currentTime("seconds");
         if (jokesDiv) {
             try {
-                const apiCalling = yield fetchJokeFromApi();
-                jokesDiv.innerHTML = apiCalling.joke;
-                currentJoke = apiCalling;
-                return currentJoke;
+                if (time) {
+                    if (time % 2 === 0) {
+                        const apiCalling = yield fetchJokeFromApi();
+                        jokesDiv.innerHTML = apiCalling.joke;
+                    }
+                    else if (time % 2 !== 0) {
+                        const secondApiCalling = yield fetchDifferentJokesFromApi();
+                        const { setup, punchline } = secondApiCalling;
+                        jokesDiv.innerHTML = `${setup} ... ${punchline}`;
+                    }
+                    else {
+                        jokesDiv.innerHTML = `No jokes today`;
+                    }
+                }
             }
             catch (_a) {
                 jokesDiv.innerHTML = errorMessageJokes;

@@ -1,6 +1,6 @@
 import { fetchJokeFromApi } from "../api/api-calls.js";
 import { Rating, Joke } from "../models/Joke.js";
-import { getUserLocation } from "../api/api-calls.js";
+import { getUserLocation, fetchDifferentJokesFromApi } from "../api/api-calls.js";
 import { time } from "console";
 
 document.addEventListener("DOMContentLoaded", firstJoke);
@@ -52,6 +52,7 @@ async function showWeather() {
                 hourly : { temperature_2m : number[] }
             })
             .hourly.temperature_2m[0];
+            
             console.log(`temperature -> ${currentTemperature}`)
             // weatherSpan.innerHTML = `Temperature: ${currentTemperature.toString()}°C`;
             console.table(`timezone -> ${JSON.stringify(apiWeatherCalling)}`);
@@ -88,15 +89,47 @@ async function showEmojiWeather() {
 }
 showEmojiWeather()
 
+function currentTime(param: "hour" | "minutes" | "seconds"): number {
+    const now = new Date();
+    const hour = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+
+    switch (param) {
+        case "hour":
+            return hour;
+
+        case "minutes" :
+            return minutes;
+
+        case "seconds" :
+            return seconds;
+        
+        default:
+            throw new Error("Invalid parameter");
+    }
+}
+
 async function firstJoke() {
     const errorMessageJokes = `Ups! No jokes today :(`;
+    const time: number = currentTime("minutes");
+
     if (jokesDiv) {
         try {
-            const apiCalling = await fetchJokeFromApi();
-            jokesDiv.innerHTML = (apiCalling as { joke : string }).joke;
-            currentJoke = apiCalling;
-            return currentJoke;
-            
+            if (time) {
+                if (time % 2 === 0) {
+                    const apiCalling = await fetchJokeFromApi();
+                    jokesDiv.innerHTML = (apiCalling as {joke : string}).joke;
+
+                } else if (time % 2 !== 0){
+                    const secondApiCalling = await fetchDifferentJokesFromApi();
+                    const { setup, punchline } = secondApiCalling as { setup: string; punchline: string };
+                    jokesDiv.innerHTML = `${setup} ... ${punchline}`;
+                } else {
+                    jokesDiv.innerHTML = `No jokes today`;
+                }
+            }
+
         } catch {
             jokesDiv.innerHTML = errorMessageJokes;
             return null;

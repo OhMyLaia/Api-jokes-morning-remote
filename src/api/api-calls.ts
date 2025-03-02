@@ -51,3 +51,17 @@ async function fetchWeatherFromApi(latitude: number, longitude: number): Promise
     })
 
 }
+
+export async function fetchDifferentJokesFromApi() {
+    return fetch(`https://official-joke-api.appspot.com/random_joke`)
+    .then(res => res.json())
+    .then( data => {
+        console.log(`Jokes2 response: ${data.setup} ... ${data.punchline}`);
+        return data;
+    })
+    .catch(error => {
+        const errorMssg: string = "Error, no weather today";
+        console.error(errorMssg, error);
+        return;
+    })
+}
