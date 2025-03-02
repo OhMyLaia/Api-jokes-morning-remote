@@ -24,10 +24,19 @@ function addEventListenersFunction() {
             getNextJokeBtn.addEventListener("click", (event) => __awaiter(this, void 0, void 0, function* () {
                 event.preventDefault();
                 try {
-                    const jokeObj = yield fetchJokeFromApi();
-                    jokesDiv.innerHTML = jokeObj.joke;
-                    console.log(jokeObj);
-                    currentJoke = jokeObj;
+                    const jokeObj1 = yield fetchJokeFromApi();
+                    const jokeOb2 = yield fetchDifferentJokesFromApi();
+                    let randomNum = Math.random() * 11;
+                    if (randomNum % 2 === 0) {
+                        const joke1 = jokeObj1.joke;
+                        jokesDiv.innerHTML = joke1;
+                        console.log(`joke1 -> ${jokeObj1}`);
+                    }
+                    else {
+                        const { setup, punchline } = jokeOb2;
+                        jokesDiv.innerHTML = `${setup} ... ${punchline}`;
+                        console.log(`joke2 -> ${setup} ... ${punchline}`);
+                    }
                     const selectedRating = document.querySelector("input[name='inlineRadioOptions']:checked");
                     selectedRating.checked = false;
                 }
@@ -108,7 +117,7 @@ function currentTime(param) {
 function firstJoke() {
     return __awaiter(this, void 0, void 0, function* () {
         const errorMessageJokes = `Ups! No jokes today :(`;
-        const time = currentTime("seconds");
+        const time = currentTime("minutes");
         if (jokesDiv) {
             try {
                 if (time) {

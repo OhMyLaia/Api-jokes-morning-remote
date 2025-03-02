@@ -21,10 +21,20 @@ async function addEventListenersFunction() {
             event.preventDefault();
 
             try {
-                const jokeObj = await fetchJokeFromApi();
-                jokesDiv.innerHTML = (jokeObj as { joke: string }).joke;
-                console.log(jokeObj);
-                currentJoke = jokeObj;
+                const jokeObj1 = await fetchJokeFromApi();
+                const jokeOb2 = await fetchDifferentJokesFromApi()
+
+                let randomNum = Math.random() * 11;
+
+                if (randomNum % 2 === 0) {
+                    const joke1 = (jokeObj1 as { joke: any }).joke;
+                    jokesDiv.innerHTML = joke1;
+                    console.log(`joke1 -> ${jokeObj1}`);
+                } else {
+                    const { setup, punchline } = jokeOb2 as { setup: string; punchline: string }; 
+                    jokesDiv.innerHTML = `${setup} ... ${punchline}`;
+                    console.log(`joke2 -> ${setup} ... ${punchline}`);
+                }
                 const selectedRating = document.querySelector("input[name='inlineRadioOptions']:checked") as HTMLInputElement;
                 selectedRating.checked = false;
 
