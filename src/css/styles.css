@@ -5,6 +5,15 @@ body {
     overflow: hidden !important;
 }
 
+#weather-span {
+    background-color: rgb(211, 251, 253);
+    padding: 1em;
+    border-radius: 2em;
+    opacity: 80%;
+    font-weight: 500;
+    color:rgb(142, 142, 160)
+}
+
 
 #egg-yolk-div {
     position: absolute;
