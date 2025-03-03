@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", showWeather);
 const jokesDiv: HTMLElement | null = document.getElementById("jokes-div");
 const getNextJokeBtn: HTMLElement | null = document.getElementById("next-joke-btn");
 const feedbackBtn: HTMLElement | null = document.getElementById("feedback-btn");
-const weatherSpan: HTMLElement | null = document.getElementById("weather-span");
+const weatherContainer: HTMLElement | null = document.getElementById("weather-span");
 
 const reportJokesArr: Array<object> = [];
 let currentJoke: object = {};
@@ -55,42 +55,77 @@ async function addEventListenersFunction() {
 addEventListenersFunction();
 
 async function showWeather() {
-    if (weatherSpan) {
+    if (weatherContainer) {
         try {
             const apiWeatherCalling = await getUserLocation();
-            const currentTemperature = (apiWeatherCalling as {
+            const { hourly, current } = (apiWeatherCalling as {
                 hourly : { temperature_2m : number[] }
+                current : { cloud_cover : number }
             })
-            .hourly.temperature_2m[0];
-            
+
+            const currentTemperature = hourly.temperature_2m[0];
+            const currentClouds = current.cloud_cover;
+
             console.log(`temperature -> ${currentTemperature}`)
-            // weatherSpan.innerHTML = `Temperature: ${currentTemperature.toString()}°C`;
+            // weatherContainer.innerHTML = `Temperature: ${currentTemperature.toString()}°C`;
             console.table(`timezone -> ${JSON.stringify(apiWeatherCalling)}`);
-            return currentTemperature;
+            return { currentTemperature, currentClouds };
 
         } catch(error) {
-        console.error(`error, weather span or api response not found`, error)
+        console.error(`error, weather span or api response not found`, error);
+        return null;
         }
     }
 }
 // showWeather();
 
+function createElement(id: string, alt: string, container: HTMLElement) {
+    let imgToShow = document.createElement("img");
+    imgToShow.id = id;
+    imgToShow.alt = alt;
+    container.appendChild(imgToShow);
+    return imgToShow;
+}
+
 async function showEmojiWeather() {
     try {
-        const temperature = await showWeather();
-        if (temperature && weatherSpan) {
-            if (temperature < 15) {
-                weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C ❄️`;
+        if (!weatherContainer) { return console.error(`no weather container in the htmlDOC`)};
 
-            } else if (temperature > 15 && temperature < 25) {
-                weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C 🧥`;
-
-            } else if (temperature > 25) {
-                weatherSpan.innerHTML = `Temperature: ${temperature.toString()}°C 🥵`;
-            }
-        } else if (weatherSpan) {
-            weatherSpan.innerHTML = `Uncertain ❓`;
+        const weatherData = await showWeather();
+        if (!weatherData) {
+            weatherContainer.innerHTML = `Uncertain (❓)`;
+            return;
         }
+
+        const emojiContainer = document.getElementById("emoji-span") as HTMLElement || null;
+        if (!emojiContainer) { return console.error(`no emoji container in the htmlDOC`)};
+
+        const imgElement = createElement("weather-icon", "weather icon", emojiContainer) as HTMLImageElement;        
+
+        const { currentTemperature, currentClouds } = weatherData;
+
+        if (currentTemperature < 15) {
+            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | ❄️`;
+
+        } else if (currentTemperature > 15 && currentTemperature < 25) {
+            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🧥`;
+
+        } else if (currentTemperature > 25) {
+            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🥵`;
+        }
+
+        if (currentClouds < 20) {
+            imgElement.src ="https://www.svgrepo.com/svg/494028/weather-2.svg";
+
+        } else if (currentClouds > 20 && currentClouds < 60) {
+            imgElement.src = "https://www.svgrepo.com/svg/479007/weather-sunny-and-cloudy.svg";
+
+        } else if (currentClouds > 60) {
+            imgElement.src = "https://www.svgrepo.com/svg/479338/weather-symbol-10.svg";
+        } else {
+            imgElement.src = "https://www.svgrepo.com/show/442424/weather-severe-alert-symbolic.svg";
+        }
+        
 
     } catch (error) {
         console.error(`could not show temperature`, error);

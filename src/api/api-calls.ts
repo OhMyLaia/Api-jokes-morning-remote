@@ -1,24 +1,3 @@
-// import { API_KEY } from "./api-key.js";
-
-export async function fetchJokeFromApi(): Promise<object> {
-    return fetch("https://icanhazdadjoke.com/", {
-        headers: {
-            "Accept": "application/json"
-        }
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log(`API response: ${data}`);
-        console.log(`joke -> ${data.joke}`);
-        return data;
-    })
-    .catch(error => {
-        const errorMssg: string = "Error, no jokes today";
-        console.error(errorMssg, error);
-        return;
-    });
-}
-
 export function getUserLocation(): Promise<object> {
     return new Promise ((resolve, reject) => {
 
@@ -38,7 +17,7 @@ export function getUserLocation(): Promise<object> {
 }
 
 async function fetchWeatherFromApi(latitude: number, longitude: number): Promise<object> {
-    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.toFixed(2)}&longitude=${longitude.toFixed(2)}&hourly=temperature_2m`)
+    return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude.toFixed(2)}&longitude=${longitude.toFixed(2)}&current=cloud_cover&hourly=temperature_2m`)
     .then(res => res.json())
     .then( data => {
         console.log(`API weather response: ${data}`);
@@ -50,6 +29,25 @@ async function fetchWeatherFromApi(latitude: number, longitude: number): Promise
         return;
     })
 
+}
+
+export async function fetchJokeFromApi(): Promise<object> {
+    return fetch("https://icanhazdadjoke.com/", {
+        headers: {
+            "Accept": "application/json"
+        }
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(`API response: ${data}`);
+        console.log(`joke -> ${data.joke}`);
+        return data;
+    })
+    .catch(error => {
+        const errorMssg: string = "Error, no jokes today";
+        console.error(errorMssg, error);
+        return;
+    });
 }
 
 export async function fetchDifferentJokesFromApi() {
