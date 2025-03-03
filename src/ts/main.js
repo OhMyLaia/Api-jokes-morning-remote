@@ -79,6 +79,8 @@ function createElement(id, alt, container) {
     let imgToShow = document.createElement("img");
     imgToShow.id = id;
     imgToShow.alt = alt;
+    imgToShow.width = 40;
+    imgToShow.height = 40;
     container.appendChild(imgToShow);
     return imgToShow;
 }
@@ -111,16 +113,16 @@ function showEmojiWeather() {
                 weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🥵`;
             }
             if (currentClouds < 20) {
-                imgElement.src = "https://www.svgrepo.com/svg/494028/weather-2.svg";
+                imgElement.src = "./assets/weather-2-svgrepo-com.svg";
             }
             else if (currentClouds > 20 && currentClouds < 60) {
-                imgElement.src = "https://www.svgrepo.com/svg/479007/weather-sunny-and-cloudy.svg";
+                imgElement.src = "/assets/weather-sunny-and-cloudy-svgrepo-com.svg";
             }
             else if (currentClouds > 60) {
-                imgElement.src = "https://www.svgrepo.com/svg/479338/weather-symbol-10.svg";
+                imgElement.src = "/assets/weather-symbol-10-svgrepo-com.svg";
             }
             else {
-                imgElement.src = "https://www.svgrepo.com/show/442424/weather-severe-alert-symbolic.svg";
+                imgElement.src = "/assets/weather-severe-alert-symbolic-svgrepo-com.svg";
             }
         }
         catch (error) {
