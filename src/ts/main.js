@@ -113,16 +113,16 @@ function showEmojiWeather() {
                 weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🥵`;
             }
             if (currentClouds < 20) {
-                imgElement.src = "./assets/weather-2-svgrepo-com.svg";
+                imgElement.src = "/public/assets/weather-2-svgrepo-com.svg";
             }
             else if (currentClouds > 20 && currentClouds < 60) {
-                imgElement.src = "/assets/weather-sunny-and-cloudy-svgrepo-com.svg";
+                imgElement.src = "/public/assets/weather-sunny-and-cloudy-svgrepo-com.svg";
             }
             else if (currentClouds > 60) {
-                imgElement.src = "/assets/weather-symbol-10-svgrepo-com.svg";
+                imgElement.src = "/public/assets/weather-symbol-10-svgrepo-com.svg";
             }
             else {
-                imgElement.src = "/assets/weather-severe-alert-symbolic-svgrepo-com.svg";
+                imgElement.src = "/public/assets/weather-severe-alert-symbolic-svgrepo-com.svg";
             }
         }
         catch (error) {
