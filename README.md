@@ -1,7 +1,7 @@
 # 📄  Home page for employees to start their shift with jokes! ✨
 - Building the logics to call APIs of jokes, showing the results, accessing the current weather through API as well, responsive web design!
 
-![Web-preview](public/assets/screenshot-preview.png)
+![Web-preview](images/screenshot-preview.png)
 
 ## 💻 Stack:
 - HTML
@@ -32,12 +32,27 @@ Before running the project, ensure you have the following installed:
    ` scripts": {
     "start": "ts-node src/api/api-calls.ts"
   }`
-also in tsconfig.json
-`         "paths": {
-            "src/*": [
-                "./src/*"
-            ]
-        },`
+also in tsconfig.json, so you can use the relative paths comfortably ( -> cleaner code)
+`  "paths": {
+   "src/*": [
+   "./src/*"
+   ]
+   },`
+
+## APIS
+### Weather API
+https://open-meteo.com
+     -> mark the endpoints you want to consume so they appear in the url, this way you can access them
+
+### Regular Jokes API
+https://icanhazdadjoke.com
+     -> needs : `        headers: {
+            "Accept": "application/json"
+        }`
+
+### Nerd & devs Jokes API
+https://official-joke-api.appspot.com/random_joke
+       -> need to consume two endpoints (first part of the joke -> .setup // ... // second part of the joke -> .punchline)
    	
 
 ## 🤝 Contributions:
