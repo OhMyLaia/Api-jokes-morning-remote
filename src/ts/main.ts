@@ -2,6 +2,7 @@ import { fetchJokeFromApi } from "../api/api-calls.js";
 import { Rating, Joke } from "../models/Joke.js";
 import { getUserLocation, fetchDifferentJokesFromApi } from "../api/api-calls.js";
 import { time } from "console";
+// importae y luego con variable
 
 
 document.addEventListener("DOMContentLoaded", firstJoke);
@@ -104,33 +105,34 @@ async function showEmojiWeather() {
         const emojiContainer = document.getElementById("emoji-span") as HTMLElement || null;
         if (!emojiContainer) { return console.error(`no emoji container in the htmlDOC`)};
 
-        const imgElement = createElement("weather-icon", "weather icon", emojiContainer) as HTMLImageElement;        
-
         const { currentTemperature, currentClouds } = weatherData;
 
         if (currentTemperature < 15) {
-            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | ❄️`;
+            weatherContainer.innerHTML = `Temperature: ${currentTemperature.toString()}°C ❄️`;
 
         } else if (currentTemperature > 15 && currentTemperature < 25) {
-            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🧥`;
+            weatherContainer.innerHTML = `Temperature: ${currentTemperature.toString()}°C 🧥`;
 
         } else if (currentTemperature > 25) {
-            weatherContainer.innerHTML = `| Temperature: ${currentTemperature.toString()}°C | 🥵`;
+            weatherContainer.innerHTML = `Temperature: ${currentTemperature.toString()}°C 🥵`;
         }
+
+        let imgID = "weather-unknown";
 
         if (currentClouds < 20) {
-            imgElement.src = "../images/weather-2-svgrepo-com.svg";
+            imgID = "weather-clear";
 
         } else if (currentClouds > 20 && currentClouds < 60) {
-            imgElement.src = "../images/weather-sunny-and-cloudy-svgrepo-com.svg";
+            imgID = "weather-partly-cloudy";
 
         } else if (currentClouds > 60) {
-            imgElement.src = "../images/weather-symbol-10-svgrepo-com.svg";
-
-        } else {
-            imgElement.src = "../images/weather-severe-alert-symbolic-svgrepo-com.svg";
+            imgID = "weather-cloudy";
         }
-        
+
+        const selectedSvg = document.getElementById(imgID);
+            if (selectedSvg) {
+                selectedSvg.style.display = "block";
+            }
 
     } catch (error) {
         console.error(`could not show temperature`, error);

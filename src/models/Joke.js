@@ -5,6 +5,10 @@ var Rating;
     Rating[Rating["GoodRating"] = 3] = "GoodRating";
 })(Rating || (Rating = {}));
 class Joke {
+    _joke;
+    _score;
+    _date;
+    _id;
     constructor(joke, score, id) {
         this._joke = joke;
         this._score = score;

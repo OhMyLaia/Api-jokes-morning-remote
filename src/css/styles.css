@@ -1,12 +1,19 @@
 body {
     background-color: rgb(251, 248, 237);
-    margin: 0 auto;
+    margin: 0 auto !important;
     padding: 3em;
     overflow: hidden !important;
 }
 
+.emoji-weather-class {
+    height: 60px;
+    width: 60px;
+}
+
 #weather-span {
     background-color: rgb(243, 253, 236);
+    text-align: center;
+    width: 60%;
     padding: 1em;
     border-radius: 2em;
     opacity: 80%;
@@ -68,7 +75,6 @@ body {
 #rating-col {
     width: 100%;
     font-size: smaller;
-    /* gap: 0em !important; */
 }
 
 
@@ -78,8 +84,12 @@ body {
     }
 
     #egg-yolk {
-        width: 60%;
-        /* max-width: 600rem; */
+        width: 50%;
+        top: 5em;
+    }
+
+    #weather-span {
+        width: 20%;
     }
 }
 
@@ -90,15 +100,11 @@ body {
         left: 52%;
     }
 
-    /* position: absolute;
-
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    width: 100%; */
-
     #egg-yolk {
         width: 100%;
-        /* max-width: 300px; */
-        
+    }
+
+    #weather-span {
+        width: 20%;
     }
 }
