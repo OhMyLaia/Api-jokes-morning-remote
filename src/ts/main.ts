@@ -91,6 +91,8 @@ function createElement(id: string, alt: string, container: HTMLElement) {
 }
 
 async function showEmojiWeather() {
+
+    try {
         if (!weatherContainer) { return console.error(`no weather container in the htmlDOC`)};
 
         const weatherData = await showWeather();
@@ -132,7 +134,6 @@ async function showEmojiWeather() {
 
     } catch (error) {
         console.error(`could not show temperature`, error);
-
     }
 }
 showEmojiWeather()
