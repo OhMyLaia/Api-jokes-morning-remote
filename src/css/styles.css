@@ -77,6 +77,13 @@ body {
     font-size: smaller;
 }
 
+#feedback-mssg {
+    /* margin: 1em; */
+    margin-left: 0.5em;
+    font-size: smaller;
+    color: grey;
+}
+
 
 @media (min-width: 768px) {
     #egg-yolk-div {
